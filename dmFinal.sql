@@ -22,8 +22,8 @@ CREATE TABLE shift (
     store_id INT NOT NULL,
     shift_start DATETIME NOT NULL,
     shift_end DATETIME NOT NULL,
-    FOREIGN KEY (employee_id) REFERENCES employee(employee_id),
-    FOREIGN KEY (store_id) REFERENCES store(store_id)
+    FOREIGN KEY (employee_id) REFERENCES employee(employee_id) ON DELETE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES store(store_id) ON DELETE CASCADE
 );
 
 CREATE TABLE landlord (
@@ -41,8 +41,8 @@ CREATE TABLE rental_contract (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     rent FLOAT NOT NULL,
-    FOREIGN KEY (store_id) REFERENCES store(store_id),
-    FOREIGN KEY (landlord_id) REFERENCES landlord(landlord_id)
+    FOREIGN KEY (store_id) REFERENCES store(store_id) ON DELETE CASCADE,
+    FOREIGN KEY (landlord_id) REFERENCES landlord(landlord_id) ON DELETE CASCADE
 );
 
 CREATE TABLE FoP (
@@ -58,8 +58,8 @@ CREATE TABLE fop_contract (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     commission_rate DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (store_id) REFERENCES store(store_id),
-    FOREIGN KEY (fop_id) REFERENCES FoP(fop_id)
+    FOREIGN KEY (store_id) REFERENCES store(store_id) ON DELETE CASCADE,
+    FOREIGN KEY (fop_id) REFERENCES FoP(fop_id) ON DELETE CASCADE
 );
 
 CREATE TABLE customer (
@@ -108,15 +108,15 @@ CREATE TABLE `order` (
     order_id INT PRIMARY KEY,
     customer_id INT,
     order_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE
 );
 
 CREATE TABLE order_line (
     order_id INT,
     product_id INT,
     quantity INT,
-    FOREIGN KEY (product_id) REFERENCES product(product_id),
-    FOREIGN KEY (order_id) REFERENCES `order`(order_id),
+    FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE,
+    FOREIGN KEY (order_id) REFERENCES `order`(order_id) ON DELETE CASCADE,
     PRIMARY KEY (order_id, product_id)
 );
 
@@ -126,7 +126,7 @@ CREATE TABLE membership (
     balance FLOAT NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NULL,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE
 );
 
 CREATE TABLE supplier (
@@ -143,9 +143,9 @@ CREATE TABLE supplier_order (
     quantity INT NOT NULL,
     order_date DATE NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id),
-    FOREIGN KEY (store_id) REFERENCES store(store_id),
-    FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id)
+    FOREIGN KEY (supplier_id) REFERENCES supplier(supplier_id) ON DELETE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES store(store_id) ON DELETE CASCADE,
+    FOREIGN KEY (equipment_id) REFERENCES equipment(equipment_id) ON DELETE CASCADE
 );
 
 CREATE TABLE store_inventory (
@@ -153,7 +153,7 @@ CREATE TABLE store_inventory (
     store_id INT NOT NULL,
     quantity INT NOT NULL,
     last_updated DATE,
-    FOREIGN KEY (material_id) REFERENCES raw_materials(material_id),
-    FOREIGN KEY (store_id) REFERENCES store(store_id),
+    FOREIGN KEY (material_id) REFERENCES raw_materials(material_id) ON DELETE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES store(store_id) ON DELETE CASCADE,
     PRIMARY KEY (material_id, store_id)
 );
