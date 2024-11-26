@@ -7,15 +7,15 @@ NUM_ROWS = 10
 
 def generate_data():
     with open('generated_data.sql', 'w') as sql_file:  # Open a file to write SQL statements
-        for i in range(NUM_ROWS):
+        for i in range(1, NUM_ROWS):
             # Generate data for employee table
             employee_id = i
-            first_name = ''.join(random.choices(string.ascii_uppercase, k=5))
-            last_name = ''.join(random.choices(string.ascii_uppercase, k=5))
+            first_name = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
+            last_name = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
             email = f"{first_name.lower()}@example.com"
             phone_number = ''.join(random.choices(string.digits, k=10))
-            hire_date = datetime.date.today()
-            job_title = "Manager"
+            hire_date = datetime.date.today().strftime('%Y-%m-%d')
+            job_title = "barista"
             salary = random.randint(30000, 80000)
 
             # Write SQL insert for employee
@@ -34,13 +34,13 @@ def generate_data():
             shift_id = i
             employee_id = i
             store_id = i
-            shift_start = datetime.datetime.now()
-            shift_end = datetime.datetime.now() + datetime.timedelta(hours=8)
+            shift_start = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            shift_end = (datetime.datetime.now() + datetime.timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')
 
             # Generate data for landlord table
             landlord_id = i
-            first_name = ''.join(random.choices(string.ascii_uppercase, k=5))
-            last_name = ''.join(random.choices(string.ascii_uppercase, k=5))
+            first_name = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
+            last_name = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
             email = f"{first_name.lower()}@example.com"
             phone_number = ''.join(random.choices(string.digits, k=10))
 
@@ -48,8 +48,8 @@ def generate_data():
             contract_id = i
             store_id = i
             landlord_id = i
-            start_date = datetime.date.today()
-            end_date = datetime.date.today() + datetime.timedelta(days=365)
+            start_date = datetime.date.today().strftime('%Y-%m-%d')
+            end_date = (datetime.date.today() + datetime.timedelta(days=365)).strftime('%Y-%m-%d')
             rent = random.randint(1000, 5000)
 
             # Generate data for FoP table
@@ -61,14 +61,14 @@ def generate_data():
             contract_id = i
             store_id = i
             fop_id = i
-            start_date = datetime.date.today()
-            end_date = datetime.date.today() + datetime.timedelta(days=365)
+            start_date = datetime.date.today().strftime('%Y-%m-%d')
+            end_date = (datetime.date.today() + datetime.timedelta(days=365)).strftime('%Y-%m-%d')
             commission_rate = random.uniform(0, 0.2)
 
             # Generate data for customer table
             customer_id = i
-            first_name = ''.join(random.choices(string.ascii_uppercase, k=5))
-            last_name = ''.join(random.choices(string.ascii_uppercase, k=5))
+            first_name = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
+            last_name = ''.join(random.choices(string.ascii_letters + string.digits, k=5))
             phone = ''.join(random.choices(string.digits, k=10))
             email = f"{first_name.lower()}@example.com"
             street = f"Street {i}"
@@ -85,7 +85,7 @@ def generate_data():
             # Generate data for equipment table
             equipment_id = i
             name = f"Equipment {i}"
-            purchase_date = datetime.date.today()
+            purchase_date = datetime.date.today().strftime('%Y-%m-%d')
             store_id = i
 
             # Generate data for raw_materials table
@@ -102,7 +102,7 @@ def generate_data():
             # Generate data for order table
             order_id = i
             customer_id = i
-            order_date = datetime.date.today()
+            order_date = datetime.date.today().strftime('%Y-%m-%d')
 
             # Generate data for order_line table
             order_id = i
@@ -113,8 +113,8 @@ def generate_data():
             membership_id = i
             customer_id = i
             balance = random.uniform(0, 1000)
-            start_date = datetime.date.today()
-            end_date = datetime.date.today() + datetime.timedelta(days=365)
+            start_date = datetime.date.today().strftime('%Y-%m-%d')
+            end_date = (datetime.date.today() + datetime.timedelta(days=365)).strftime('%Y-%m-%d')
 
             # Generate data for supplier table
             supplier_id = i
@@ -127,14 +127,14 @@ def generate_data():
             store_id = i
             equipment_id = i
             quantity = random.randint(1, 10)
-            order_date = datetime.date.today()
+            order_date = datetime.date.today().strftime('%Y-%m-%d')
             price = random.uniform(100, 1000)
 
             # Generate data for store_inventory table
             material_id = i
             store_id = i
             quantity = random.randint(1, 100)
-            last_updated = datetime.date.today()
+            last_updated = datetime.date.today().strftime('%Y-%m-%d')
 
             # Write SQL insert for shift
             sql_file.write(f"INSERT INTO shift (shift_id, employee_id, store_id, shift_start, shift_end) VALUES ({shift_id}, {employee_id}, {store_id}, '{shift_start}', '{shift_end}');\n")
@@ -167,7 +167,7 @@ def generate_data():
             sql_file.write(f"INSERT INTO recipe (recipe_id, material_id, product_id, quantity) VALUES ({recipe_id}, {material_id}, {product_id}, {quantity});\n")
 
             # Write SQL insert for order
-            sql_file.write(f"INSERT INTO order (order_id, customer_id, order_date) VALUES ({order_id}, {customer_id}, '{order_date}');\n")
+            sql_file.write(f"INSERT INTO `order` (order_id, customer_id, order_date) VALUES ({order_id}, {customer_id}, '{order_date}');\n")
 
             # Write SQL insert for order_line
             sql_file.write(f"INSERT INTO order_line (order_id, product_id, quantity) VALUES ({order_id}, {product_id}, {quantity});\n")
