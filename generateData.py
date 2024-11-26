@@ -80,7 +80,7 @@ def generate_data():
             # Generate data for product table
             product_id = i
             product_name = f"Product {i}"
-            price = random.uniform(1, 100)
+            product_price = random.randint(4, 7) + 0.99
 
             # Generate data for equipment table
             equipment_id = i
@@ -155,7 +155,7 @@ def generate_data():
             sql_file.write(f"INSERT INTO customer (customer_id, first_name, last_name, phone, email, street, city, province, zip_code) VALUES ({customer_id}, '{first_name}', '{last_name}', '{phone}', '{email}', '{street}', '{city}', '{province}', '{zip_code}');\n")
 
             # Write SQL insert for product
-            sql_file.write(f"INSERT INTO product (product_id, product_name, price) VALUES ({product_id}, '{product_name}', {price});\n")
+            sql_file.write(f"INSERT INTO product (product_id, product_name, price) VALUES ({product_id}, '{product_name}', {product_price});\n")
 
             # Write SQL insert for equipment
             sql_file.write(f"INSERT INTO equipment (equipment_id, name, purchase_date, store_id) VALUES ({equipment_id}, '{name}', '{purchase_date}', {store_id});\n")
