@@ -49,4 +49,37 @@
             echo '<p>No recipe found for ' . $product_name . '.</p>';
         }
     }
+    // Capture user input for customer name
+    echo '<form method="POST" action="">';
+    echo '<label for="customer_name">Enter Customer Name:</label>';
+    echo '<input type="text" id="customer_name" name="customer_name" required>';
+    echo '<input type="submit" value="Submit">';
+    echo '</form>';
+
+    // Record user's input to $customer_name
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $customer_name = $_POST['customer_name'];
+    }
+
+    // Update SQL query to select customer and membership information based on user input
+    $customerSql = "SELECT c.customer_id, c.first_name, c.last_name, c.email, c.phone, c.street, c.city, c.province, c.zip_code, m.membership_id, m.balance, m.start_date, m.end_date FROM customer c LEFT JOIN membership m ON c.customer_id = m.customer_id WHERE c.first_name = '$customer_name' OR c.last_name = '$customer_name'";
+    $customerResults = mysqli_query($link, $customerSql);
+    if ($customerResults) {
+        if (mysqli_num_rows($customerResults) > 0) {
+            $customer = mysqli_fetch_array($customerResults);
+            echo '<h1>Customer Information</h1>';
+            echo '<p>Customer ID: ' . $customer['customer_id'] . '</p>';
+            echo '<p>Name: ' . $customer['first_name'] . ' ' . $customer['last_name'] . '</p>';
+            echo '<p>Email: ' . $customer['email'] . '</p>';
+            echo '<p>Phone: ' . $customer['phone'] . '</p>';
+            echo '<p>Address: ' . $customer['street'] . ', ' . $customer['city'] . ', ' . $customer['province'] . ', ' . $customer['zip_code'] . '</p>';
+            echo '<h1>Membership Information</h1>';
+            echo '<p>Membership ID: ' . $customer['membership_id'] . '</p>';
+            echo '<p>Balance: $' . $customer['balance'] . '</p>';
+            echo '<p>Start Date: ' . $customer['start_date'] . '</p>';
+            echo '<p>End Date: ' . $customer['end_date'] . '</p>';
+        } else {
+            echo '<p>No customer found with that name.</p>';
+        }
+    }
 ?>
