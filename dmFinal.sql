@@ -108,7 +108,9 @@ CREATE TABLE `order` (
     order_id INT PRIMARY KEY,
     customer_id INT,
     order_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE
+    fop_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customer(customer_id) ON DELETE CASCADE,
+    FOREIGN KEY (fop_id) REFERENCES FoP(fop_id) ON DELETE CASCADE
 );
 
 CREATE TABLE order_line (

@@ -82,4 +82,34 @@
             echo '<p>No customer found with that name.</p>';
         }
     }
+
+    // Capture user input for store location
+    echo '<form method="POST" action="">';
+    echo '<label for="store_location">Enter Store Location:</label>';
+    echo '<input type="text" id="store_location" name="store_location" required>';
+    echo '<input type="submit" value="Submit">';
+    echo '</form>';
+
+    // Record user's input to $store_location
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $store_location = $_POST['store_location'];
+    }
+
+    // Update SQL query to select store inventory based on user input
+    $storeInventorySql = "SELECT si.store_id, si.material_id, si.quantity, rm.material_name FROM store_inventory si JOIN store ON si.store_id = store.store_id JOIN raw_materials rm ON si.material_id = rm.material_id WHERE store.store_name = '$store_location'";
+    $storeInventoryResults = mysqli_query($link, $storeInventorySql);
+    if ($storeInventoryResults) {
+        if (mysqli_num_rows($storeInventoryResults) > 0) {
+            echo '<h1>Store Inventory for ' . $store_location . '</h1>';
+            while ($storeInventoryRow = mysqli_fetch_array($storeInventoryResults)) {
+                echo '<div style="border: 2px solid #e4e4e4; padding: 15px;">';
+                echo '<p>Store ID: ' . $storeInventoryRow['store_id'] . '</p>';
+                echo '<p>Material Name: ' . $storeInventoryRow['material_name'] . '</p>';
+                echo '<p>Quantity: ' . $storeInventoryRow['quantity'] . '</p>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No store inventory found for ' . $store_location . '.</p>';
+        }
+    }
 ?>

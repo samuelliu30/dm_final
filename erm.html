@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Query</title>
+</head>
+<body>
+    <h1>Product Query</h1>
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
+        <label for="product_id">Product ID:</label>
+        <input type="text" id="product_id" name="product_id">
+        <input type="submit" value="Submit">
+    </form>
+    <?php
+    define('DB_HOST', 'localhost');
+    define('DB_USER', 'root');
+    define('DB_PASSWORD', '');
+    define('DB_NAME', 'dm_togoCafe');
+    $link=mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+    $connect=mysqli_select_db($link,DB_NAME);
+    if ($connect) {echo 'Connected to database...<br>';}
+    $product_id = $_POST['product_id'];
+    $sql = "SELECT * FROM product WHERE product_id = $product_id";
+    $result = mysqli_query($link, $sql);
+    if($result) {
+        while($row = mysqli_fetch_array($result)) {
+            echo '<div style="border: 2px solid #e4e4e4; padding: 15px;">';
+            echo '<p>Product ID: '.$row['product_id'].'</p>';
+            echo '<p>Product Name: '.$row['product_name'].'</p>';
+            echo '<p>Product Price: '.$row['price'].'</p>';
+            echo '</div>';
+        }
+    }
+    ?>
+</body>
+</html>
