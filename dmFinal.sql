@@ -159,3 +159,13 @@ CREATE TABLE store_inventory (
     FOREIGN KEY (store_id) REFERENCES store(store_id) ON DELETE CASCADE,
     PRIMARY KEY (material_id, store_id)
 );
+
+CREATE TABLE menu (
+    menu_id INT NOT NULL,
+    store_id INT NOT NULL,
+    product_id INT,
+    FOREIGN KEY (store_id) REFERENCES store(store_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE,
+    PRIMARY KEY (menu_id, store_id)
+);
+
